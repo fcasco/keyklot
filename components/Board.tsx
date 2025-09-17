@@ -1,0 +1,50 @@
+import React from 'react';
+import { BlockType } from '../types';
+import Block from './Block';
+import { BOARD_WIDTH, BOARD_HEIGHT, GRID_CELL_SIZE } from '../constants';
+
+interface BoardProps {
+  blocks: BlockType[];
+  selectedBlockId: number | null;
+  onBlockSelect: (id: number) => void;
+}
+
+const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect }) => {
+  return (
+    <div 
+      className="relative bg-black/20 rounded-lg p-2 shadow-lg border-2 border-mid-blue"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${BOARD_WIDTH}, ${GRID_CELL_SIZE})`,
+        gridTemplateRows: `repeat(${BOARD_HEIGHT}, ${GRID_CELL_SIZE})`,
+        gap: '0.5rem',
+      }}
+    >
+      {/* Background Grid Cells */}
+      {Array.from({ length: BOARD_WIDTH * BOARD_HEIGHT }).map((_, i) => (
+        <div key={i} className="bg-black/20 rounded-md" />
+      ))}
+      
+      {/* Exit Area visualization */}
+      <div 
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-teal/10 rounded-md border-2 border-dashed border-teal/30"
+        style={{
+          width: `calc(2 * ${GRID_CELL_SIZE} + 0.5rem)`,
+          height: GRID_CELL_SIZE,
+        }}
+      ></div>
+
+      {/* Blocks */}
+      {blocks.map(block => (
+        <Block
+          key={block.id}
+          block={block}
+          isSelected={block.id === selectedBlockId}
+          onSelect={onBlockSelect}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default Board;

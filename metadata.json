@@ -1,0 +1,5 @@
+{
+  "name": "Keyklot",
+  "description": "A classic Klotski sliding block puzzle game, playable with your keyboard. Players can select blocks and move them with the 'w', 'a', 's', and 'd' keys to solve the puzzle.",
+  "requestFramePermissions": []
+}
