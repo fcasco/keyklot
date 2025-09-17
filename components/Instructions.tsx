@@ -2,17 +2,18 @@ import React from 'react';
 
 const Instructions: React.FC = () => {
   return (
-    <div className="bg-black/20 p-4 rounded-lg w-full text-slate-300">
-      <h3 className="text-lg font-bold text-slate-100 mb-3 text-center">How to Play</h3>
-      <ul className="space-y-2 text-sm">
+    <div className="bg-black/20 px-6 py-3 rounded-lg w-full max-w-4xl text-slate-300 mt-8">
+      <ul className="flex flex-col md:flex-row justify-center items-center gap-x-6 gap-y-2 text-sm text-center">
         <li>
-          <strong>1. Select a block:</strong> Click on a block or press its corresponding letter key.
+          <strong>Select:</strong> Click or press letter key.
         </li>
+        <li className="hidden md:block text-slate-500">|</li>
         <li>
-          <strong>2. Move the block:</strong> Use the <span className="font-bold text-slate-100">W, A, S, D</span> keys to move the selected block up, left, down, or right into an empty space.
+          <strong>Move:</strong> Use <span className="font-bold text-slate-100">W, A, S, D</span> keys.
         </li>
+        <li className="hidden md:block text-slate-500">|</li>
         <li>
-          <strong>3. Goal:</strong> Move the large <span className="font-bold text-coral">2x2 block</span> to the exit at the bottom center of the board.
+          <strong>Goal:</strong> Move the large <span className="font-bold text-coral">2x2 block</span> to the exit.
         </li>
       </ul>
     </div>

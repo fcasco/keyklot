@@ -101,32 +101,36 @@ function App() {
   }, [handleKeyDown]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-4 md:py-8">
-      <div className="text-center mb-6">
-        <h1 className="text-5xl font-bold text-gold tracking-wider">KEYKLOT</h1>
-        <p className="text-slate-300 mt-2">Move the main block to the exit at the bottom.</p>
-      </div>
+    <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
+      <div className="flex flex-col items-center">
+        <div className="text-center mb-6">
+          <h1 className="text-5xl font-bold text-gold tracking-wider">KEYKLOT</h1>
+          <p className="text-slate-300 mt-2">Move the main block to the exit at the bottom.</p>
+        </div>
 
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-        <Board 
-          blocks={blocks}
-          selectedBlockId={selectedBlockId}
-          onBlockSelect={setSelectedBlockId}
-        />
-        <div className="flex flex-col items-center gap-4 w-64">
-          <div className="bg-black/20 p-4 rounded-lg text-center w-full">
-            <p className="text-lg text-slate-300">MOVES</p>
-            <p className="text-4xl font-bold text-slate-100">{moveCount}</p>
+        <div>
+          <Board 
+            blocks={blocks}
+            selectedBlockId={selectedBlockId}
+            onBlockSelect={setSelectedBlockId}
+          />
+          <div className="flex justify-between items-center mt-4">
+            <div className="bg-black/20 px-4 py-2 rounded-lg flex items-baseline gap-3">
+              <p className="text-lg text-slate-300">MOVES</p>
+              <p className="text-3xl font-bold text-slate-100">{moveCount}</p>
+            </div>
+            <button
+              onClick={handleReset}
+              className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal focus:ring-opacity-75"
+            >
+              Reset
+            </button>
           </div>
-          <button
-            onClick={handleReset}
-            className="w-full bg-teal hover:bg-teal/90 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal focus:ring-opacity-75"
-          >
-            Reset Game
-          </button>
-          <Instructions />
         </div>
       </div>
+      
+      <Instructions />
+
       {isWin && <WinModal moves={moveCount} onPlayAgain={handleReset} />}
     </div>
   );
