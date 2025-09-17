@@ -5,6 +5,10 @@ export const BOARD_HEIGHT = 5;
 
 export const GRID_CELL_SIZE = 'min(18vmin, 100px)';
 
+// A short, crisp "tick" sound for when a piece moves.
+// Encoded as Base64 to avoid needing a separate file.
+export const MOVE_SOUND_B64 = 'data:audio/wav;base64,UklGRjIAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAATElTVBoAAABJTkZPSVNGVA4AAABMYXZmNTguMjkuMTAwAGRhdGEUAAAA//8/f/7/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/fw==';
+
 export const INITIAL_LAYOUT: BlockType[] = [
   // Main 2x2 block (Cao Cao)
   { id: 1, x: 1, y: 0, width: 2, height: 2, isMain: true, letter: 'w' },
