@@ -13,7 +13,7 @@ const Instructions: React.FC = () => {
         </li>
         <li className="hidden md:block text-slate-500">|</li>
         <li>
-          <strong>Goal:</strong> Move the large <span className="font-bold text-coral">2x2 block</span> to the exit.
+          <strong>Deselect:</strong> Press <span className="font-bold text-slate-100">ESC / ENTER</span>.
         </li>
       </ul>
     </div>

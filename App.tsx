@@ -55,6 +55,13 @@ function App() {
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (isWin) return;
 
+    // Handle deselection if a block is selected
+    if (selectedBlockId !== null && (event.key === 'Enter' || event.key === 'Escape')) {
+      event.preventDefault();
+      setSelectedBlockId(null);
+      return;
+    }
+
     const key = event.key.toLowerCase();
     const movementKeys = ['w', 'a', 's', 'd'];
 
