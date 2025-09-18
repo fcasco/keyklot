@@ -227,9 +227,8 @@ function App() {
           />
           <div className="flex justify-between items-center mt-4">
             <div className="bg-black/20 px-4 py-2 rounded-lg flex items-baseline gap-3">
-              <p className="text-lg text-theme-text-muted">{moveCount}
-                <span className="text-sm">moves</span>
-              </p>
+              <p className="text-lg text-theme-text-muted">MOVES</p>
+              <p className="text-3xl font-bold text-theme-text">{moveCount}</p>
             </div>
             <div className="flex items-center gap-2 md:gap-4">
               <button
