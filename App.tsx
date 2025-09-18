@@ -54,6 +54,53 @@ function App() {
     return true;
   };
 
+  const attemptMove = useCallback((dx: number, dy: number) => {
+    if (!selectedBlockId) return;
+    const blockToMove = blocks.find(b => b.id === selectedBlockId);
+    
+    if (blockToMove && isValidMove(blockToMove, dx, dy)) {
+      const newBlocks = blocks.map(b => 
+        b.id === selectedBlockId ? { ...b, x: b.x + dx, y: b.y + dy } : b
+      );
+      setBlocks(newBlocks);
+      setMoveCount(prev => prev + 1);
+      if (!isMuted) {
+        playMoveSound();
+      }
+      checkWinCondition(newBlocks);
+    }
+  }, [blocks, selectedBlockId, isMuted, playMoveSound]);
+
+  const handleCellClick = (targetX: number, targetY: number) => {
+    if (!selectedBlockId) return;
+    const block = blocks.find(b => b.id === selectedBlockId);
+    if (!block) return;
+
+    let dx = 0;
+    let dy = 0;
+
+    // Check for horizontal move intent. User clicked on the same row(s) as the block.
+    if (targetY >= block.y && targetY < block.y + block.height) {
+      if (targetX >= block.x + block.width) { // Move right
+        dx = 1;
+      } else if (targetX < block.x) { // Move left
+        dx = -1;
+      }
+    }
+    // Check for vertical move intent. User clicked on the same col(s) as the block.
+    else if (targetX >= block.x && targetX < block.x + block.width) {
+      if (targetY >= block.y + block.height) { // Move down
+        dy = 1;
+      } else if (targetY < block.y) { // Move up
+        dy = -1;
+      }
+    }
+
+    if (dx !== 0 || dy !== 0) {
+      attemptMove(dx, dy);
+    }
+  };
+
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (isWin) return;
 
@@ -79,18 +126,7 @@ function App() {
         case 'd': dx = 1; break;
       }
       
-      const blockToMove = blocks.find(b => b.id === selectedBlockId);
-      if (blockToMove && isValidMove(blockToMove, dx, dy)) {
-        const newBlocks = blocks.map(b => 
-          b.id === selectedBlockId ? { ...b, x: b.x + dx, y: b.y + dy } : b
-        );
-        setBlocks(newBlocks);
-        setMoveCount(prev => prev + 1);
-        if (!isMuted) {
-          playMoveSound();
-        }
-        checkWinCondition(newBlocks);
-      }
+      attemptMove(dx, dy);
       return;
     }
 
@@ -100,7 +136,7 @@ function App() {
       setSelectedBlockId(blockToSelect.id);
     }
 
-  }, [selectedBlockId, blocks, isWin, isMuted, playMoveSound]);
+  }, [selectedBlockId, blocks, isWin, attemptMove]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -130,6 +166,7 @@ function App() {
             blocks={blocks}
             selectedBlockId={selectedBlockId}
             onBlockSelect={setSelectedBlockId}
+            onCellClick={handleCellClick}
           />
           <div className="flex justify-between items-center mt-4">
             <div className="bg-black/20 px-4 py-2 rounded-lg flex items-baseline gap-3">

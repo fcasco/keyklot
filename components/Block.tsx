@@ -26,10 +26,10 @@ const Block: React.FC<BlockProps> = ({ block, isSelected, onSelect }) => {
   const padding = '0.5rem';
 
   const style = {
-    top: `calc(${padding} + ${y} * (${GRID_CELL_SIZE} + ${gap}))`,
-    left: `calc(${padding} + ${x} * (${GRID_CELL_SIZE} + ${gap}))`,
-    width: `calc(${width} * ${GRID_CELL_SIZE} + (${width - 1}) * ${gap})`,
-    height: `calc(${height} * ${GRID_CELL_SIZE} + (${height - 1}) * ${gap})`,
+    top: `calc(${padding} + ${y} * ${GRID_CELL_SIZE} + ${y} * ${gap})`,
+    left: `calc(${padding} + ${x} * ${GRID_CELL_SIZE} + ${x} * ${gap})`,
+    width: `calc(${width} * ${GRID_CELL_SIZE} + (${width} - 1) * ${gap})`,
+    height: `calc(${height} * ${GRID_CELL_SIZE} + (${height} - 1) * ${gap})`,
     transitionProperty: 'top, left',
   };
 
@@ -37,7 +37,10 @@ const Block: React.FC<BlockProps> = ({ block, isSelected, onSelect }) => {
     <div
       style={style}
       className={`${baseClasses} ${colorClasses} ${selectedClasses}`}
-      onClick={() => onSelect(block.id)}
+      onClick={(e) => {
+        e.stopPropagation(); // Prevent click from bubbling to the board
+        onSelect(block.id);
+      }}
     >
       {letter && (
         <span className="text-5xl lg:text-7xl font-bold text-black/20 select-none pointer-events-none">
