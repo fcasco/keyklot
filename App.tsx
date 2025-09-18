@@ -258,12 +258,13 @@ function App() {
       
       <div>
         <Instructions />
-        <p className="text-center text-slate-500 text-xs mt-2" aria-label="App version">
-          v1.0.0
-        </p>
       </div>
 
       {isWin && <WinModal moves={moveCount} onPlayAgain={handleReset} />}
+
+      <p className="fixed bottom-2 right-4 text-theme-text-muted text-xs opacity-50 select-none" aria-label="App version">
+        v1.0.0
+      </p>
     </div>
   );
 }
