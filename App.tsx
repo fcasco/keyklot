@@ -237,7 +237,12 @@ function App() {
         </div>
       </div>
       
-      <Instructions />
+      <div>
+        <Instructions />
+        <p className="text-center text-slate-500 text-xs mt-2" aria-label="App version">
+          v1.0.0
+        </p>
+      </div>
 
       {isWin && <WinModal moves={moveCount} onPlayAgain={handleReset} />}
     </div>
