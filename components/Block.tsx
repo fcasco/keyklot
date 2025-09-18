@@ -12,7 +12,7 @@ interface BlockProps {
 const Block: React.FC<BlockProps> = ({ block, isSelected, isJustMoved, onSelect }) => {
   const { x, y, width, height, isMain, letter } = block;
 
-  const baseClasses = "absolute rounded-md cursor-pointer transition-all duration-200 ease-in-out flex items-center justify-center shadow-md hover:brightness-95";
+  const baseClasses = "absolute rounded-md cursor-pointer transition-all duration-200 ease-in-out flex items-end justify-end p-2 shadow-md hover:brightness-95";
   const colorClasses = isMain
     ? 'bg-theme-accent'
     : width === 1 && height === 1
@@ -45,7 +45,7 @@ const Block: React.FC<BlockProps> = ({ block, isSelected, isJustMoved, onSelect 
       }}
     >
       {letter && (
-        <span className="text-5xl lg:text-7xl font-bold text-black/20 select-none pointer-events-none">
+        <span className="text-5xl lg:text-7xl font-bold text-black/20 select-none pointer-events-none leading-none">
           {letter.toUpperCase()}
         </span>
       )}
