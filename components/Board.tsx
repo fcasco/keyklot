@@ -51,6 +51,17 @@ const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect, o
         }}
       ></div>
 
+      {/* Border Opening Element */}
+      {/* This div is positioned over the bottom border to create a visual gap for the exit */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 bg-dark-blue"
+        style={{
+          width: `calc(2 * ${GRID_CELL_SIZE} + 0.5rem)`,
+          height: '4px', // A bit extra height to ensure full coverage of the border
+          bottom: '-3px', // Positioned to cover the border
+        }}
+      ></div>
+
       {/* Blocks */}
       {blocks.map(block => (
         <Block
