@@ -14,7 +14,7 @@ interface BoardProps {
 const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect, onCellClick, justMovedBlockId }) => {
   return (
     <div 
-      className="relative bg-black/20 rounded-lg p-2 shadow-lg border-2 border-mid-blue"
+      className="relative bg-black/20 rounded-lg p-2 shadow-lg border-4 border-theme-neutral"
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${BOARD_WIDTH}, ${GRID_CELL_SIZE})`,
@@ -43,23 +43,14 @@ const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect, o
         );
       })}
       
-      {/* Exit Area visualization */}
-      <div 
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-teal/10 rounded-md border-2 border-dashed border-teal/30 pointer-events-none"
-        style={{
-          width: `calc(2 * ${GRID_CELL_SIZE} + 0.5rem)`,
-          height: GRID_CELL_SIZE,
-        }}
-      ></div>
-
       {/* Border Opening Element */}
       {/* This div is positioned over the bottom border to create a visual gap for the exit */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 bg-dark-blue"
+        className="absolute left-1/2 -translate-x-1/2 bg-theme-bg"
         style={{
           width: `calc(2 * ${GRID_CELL_SIZE} + 0.5rem)`,
-          height: '4px', // A bit extra height to ensure full coverage of the border
-          bottom: '-3px', // Positioned to cover the border
+          height: '6px', // A bit extra height to ensure full coverage of the border
+          bottom: '-5px', // Positioned to cover the border
         }}
       ></div>
 

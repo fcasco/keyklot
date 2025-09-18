@@ -5,8 +5,10 @@ import Board from './components/Board';
 import Instructions from './components/Instructions';
 import WinModal from './components/WinModal';
 import { useSound } from './hooks/useSound';
+import ThemeSelector from './components/ThemeSelector';
 
 const SAVEGAME_KEY = 'keyklot-savegame';
+const THEME_KEY = 'keyklot-theme';
 
 function App() {
   const [blocks, setBlocks] = useState<BlockType[]>(INITIAL_LAYOUT);
@@ -16,6 +18,7 @@ function App() {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isSaveSlotFull, setIsSaveSlotFull] = useState<boolean>(false);
   const [justMovedBlockId, setJustMovedBlockId] = useState<number | null>(null);
+  const [theme, setTheme] = useState<string>(() => localStorage.getItem(THEME_KEY) || 'ocean');
 
   const playMoveSound = useSound(MOVE_SOUND_B64);
 
@@ -25,6 +28,11 @@ function App() {
       setIsSaveSlotFull(true);
     }
   }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+  }, [theme]);
 
   useEffect(() => {
     if (justMovedBlockId) {
@@ -195,18 +203,18 @@ function App() {
 
   const SoundIcon = isMuted 
     ? () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-theme-text-muted opacity-60"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
     )
     : () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-300"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-theme-text-muted"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
     );
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
       <div className="flex flex-col items-center">
         <div className="text-center mb-6">
-          <h1 className="text-5xl font-bold text-gold tracking-wider">KEYKLOT</h1>
-          <p className="text-slate-300 mt-2">Move the main block to the exit at the bottom.</p>
+          <h1 className="text-5xl font-bold text-theme-primary tracking-wider">KEYKLOT</h1>
+          <p className="text-theme-text-muted mt-2">Move the main block to the exit at the bottom.</p>
         </div>
 
         <div>
@@ -219,26 +227,27 @@ function App() {
           />
           <div className="flex justify-between items-center mt-4">
             <div className="bg-black/20 px-4 py-2 rounded-lg flex items-baseline gap-3">
-              <p className="text-lg text-slate-300">MOVES</p>
-              <p className="text-3xl font-bold text-slate-100">{moveCount}</p>
+              <p className="text-lg text-theme-text-muted">MOVES</p>
+              <p className="text-3xl font-bold text-theme-text">{moveCount}</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <button
                 onClick={() => setIsMuted(!isMuted)}
-                className="bg-black/20 p-3 rounded-lg transition-colors duration-200 hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-teal focus:ring-opacity-75"
+                className="bg-black/20 p-3 rounded-lg transition-colors duration-200 hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-theme-secondary focus:ring-opacity-75"
                 aria-label={isMuted ? "Unmute sounds" : "Mute sounds"}
               >
                 <SoundIcon />
               </button>
+              <ThemeSelector currentTheme={theme} onThemeChange={setTheme} />
               <button
                 onClick={handleSaveRestore}
-                className="bg-mid-blue hover:bg-mid-blue/90 text-white font-bold py-3 px-5 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-mid-blue focus:ring-opacity-75"
+                className="bg-theme-neutral hover:brightness-95 text-white font-bold py-3 px-5 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-theme-neutral focus:ring-opacity-75"
               >
                 {isSaveSlotFull ? 'Restore' : 'Save'}
               </button>
               <button
                 onClick={handleReset}
-                className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal focus:ring-opacity-75"
+                className="bg-theme-secondary hover:brightness-95 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-theme-secondary focus:ring-opacity-75"
               >
                 Reset
               </button>

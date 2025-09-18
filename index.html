@@ -11,11 +11,14 @@
         theme: {
           extend: {
             colors: {
-              'gold': '#edae49',
-              'coral': '#d1495b',
-              'teal': '#00798c',
-              'mid-blue': '#30638e',
-              'dark-blue': '#003d5b',
+              'theme-bg': 'var(--color-bg)',
+              'theme-text': 'var(--color-text)',
+              'theme-text-muted': 'var(--color-text-muted)',
+              'theme-text-dark': 'var(--color-text-dark)',
+              'theme-primary': 'var(--color-primary)',
+              'theme-secondary': 'var(--color-secondary)',
+              'theme-accent': 'var(--color-accent)',
+              'theme-neutral': 'var(--color-neutral)',
             }
           }
         }
@@ -25,8 +28,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nova+Square&display=swap" rel="stylesheet">
     <style>
+      :root, [data-theme="ocean"] {
+        --color-bg: #003d5b;
+        --color-text: #f1f5f9; /* slate-100 */
+        --color-text-muted: #cbd5e1; /* slate-300 */
+        --color-text-dark: #003d5b;
+        --color-primary: #edae49; /* gold */
+        --color-secondary: #00798c; /* teal */
+        --color-accent: #d1495b; /* coral */
+        --color-neutral: #30638e; /* mid-blue */
+      }
+
+      [data-theme="forest"] {
+        --color-bg: #283618;
+        --color-text: #fefae0;
+        --color-text-muted: #fefae0;
+        --color-text-dark: #283618;
+        --color-primary: #dda15e;   /* calamansi */
+        --color-secondary: #bc6c25;    /* brown sugar */
+        --color-accent: #606c38;   /* feijoa */
+        --color-neutral: #606c38;   /* feijoa */
+      }
+      
       body {
         font-family: 'Nova Square', sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
       @keyframes move-success-flash {
         50% {
@@ -47,7 +73,7 @@
 }
 </script>
 </head>
-  <body class="bg-dark-blue text-slate-100">
+  <body class="bg-theme-bg text-theme-text">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

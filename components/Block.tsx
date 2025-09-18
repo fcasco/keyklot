@@ -12,16 +12,16 @@ interface BlockProps {
 const Block: React.FC<BlockProps> = ({ block, isSelected, isJustMoved, onSelect }) => {
   const { x, y, width, height, isMain, letter } = block;
 
-  const baseClasses = "absolute rounded-md cursor-pointer transition-all duration-200 ease-in-out flex items-center justify-center shadow-md";
+  const baseClasses = "absolute rounded-md cursor-pointer transition-all duration-200 ease-in-out flex items-center justify-center shadow-md hover:brightness-95";
   const colorClasses = isMain
-    ? 'bg-coral hover:bg-coral/90'
+    ? 'bg-theme-accent'
     : width === 1 && height === 1
-    ? 'bg-teal hover:bg-teal/90'
+    ? 'bg-theme-secondary'
     : width > height
-    ? 'bg-gold hover:bg-gold/90'
-    : 'bg-mid-blue hover:bg-mid-blue/90';
+    ? 'bg-theme-primary'
+    : 'bg-theme-neutral';
 
-  const selectedClasses = isSelected ? 'ring-4 ring-slate-100 ring-offset-2 ring-offset-dark-blue z-10' : 'shadow-lg';
+  const selectedClasses = isSelected ? 'ring-4 ring-slate-100 ring-offset-2 ring-offset-theme-bg z-10' : 'shadow-lg';
   const animationClass = isJustMoved ? 'animate-move-success' : '';
   
   const gap = '0.5rem';
