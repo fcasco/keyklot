@@ -8,9 +8,10 @@ interface BoardProps {
   selectedBlockId: number | null;
   onBlockSelect: (id: number) => void;
   onCellClick?: (x: number, y: number) => void;
+  justMovedBlockId: number | null;
 }
 
-const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect, onCellClick }) => {
+const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect, onCellClick, justMovedBlockId }) => {
   return (
     <div 
       className="relative bg-black/20 rounded-lg p-2 shadow-lg border-2 border-mid-blue"
@@ -68,6 +69,7 @@ const Board: React.FC<BoardProps> = ({ blocks, selectedBlockId, onBlockSelect, o
           key={block.id}
           block={block}
           isSelected={block.id === selectedBlockId}
+          isJustMoved={block.id === justMovedBlockId}
           onSelect={onBlockSelect}
         />
       ))}

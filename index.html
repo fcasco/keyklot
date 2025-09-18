@@ -28,6 +28,14 @@
       body {
         font-family: 'Nova Square', sans-serif;
       }
+      @keyframes move-success-flash {
+        50% {
+          filter: brightness(1.75);
+        }
+      }
+      .animate-move-success {
+        animation: move-success-flash 0.3s ease-in-out;
+      }
     </style>
   <script type="importmap">
 {

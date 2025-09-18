@@ -15,6 +15,7 @@ function App() {
   const [isWin, setIsWin] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isSaveSlotFull, setIsSaveSlotFull] = useState<boolean>(false);
+  const [justMovedBlockId, setJustMovedBlockId] = useState<number | null>(null);
 
   const playMoveSound = useSound(MOVE_SOUND_B64);
 
@@ -24,6 +25,13 @@ function App() {
       setIsSaveSlotFull(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (justMovedBlockId) {
+      const timer = setTimeout(() => setJustMovedBlockId(null), 300); // Animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [justMovedBlockId]);
 
   const handleReset = () => {
     setBlocks(INITIAL_LAYOUT);
@@ -103,6 +111,7 @@ function App() {
       );
       setBlocks(newBlocks);
       setMoveCount(prev => prev + 1);
+      setJustMovedBlockId(selectedBlockId); // Trigger animation
       if (!isMuted) {
         playMoveSound();
       }
@@ -206,6 +215,7 @@ function App() {
             selectedBlockId={selectedBlockId}
             onBlockSelect={setSelectedBlockId}
             onCellClick={handleCellClick}
+            justMovedBlockId={justMovedBlockId}
           />
           <div className="flex justify-between items-center mt-4">
             <div className="bg-black/20 px-4 py-2 rounded-lg flex items-baseline gap-3">

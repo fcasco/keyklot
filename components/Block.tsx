@@ -5,10 +5,11 @@ import { GRID_CELL_SIZE } from '../constants';
 interface BlockProps {
   block: BlockType;
   isSelected: boolean;
+  isJustMoved: boolean;
   onSelect: (id: number) => void;
 }
 
-const Block: React.FC<BlockProps> = ({ block, isSelected, onSelect }) => {
+const Block: React.FC<BlockProps> = ({ block, isSelected, isJustMoved, onSelect }) => {
   const { x, y, width, height, isMain, letter } = block;
 
   const baseClasses = "absolute rounded-md cursor-pointer transition-all duration-200 ease-in-out flex items-center justify-center shadow-md";
@@ -21,6 +22,7 @@ const Block: React.FC<BlockProps> = ({ block, isSelected, onSelect }) => {
     : 'bg-mid-blue hover:bg-mid-blue/90';
 
   const selectedClasses = isSelected ? 'ring-4 ring-slate-100 ring-offset-2 ring-offset-dark-blue z-10' : 'shadow-lg';
+  const animationClass = isJustMoved ? 'animate-move-success' : '';
   
   const gap = '0.5rem';
   const padding = '0.5rem';
@@ -36,7 +38,7 @@ const Block: React.FC<BlockProps> = ({ block, isSelected, onSelect }) => {
   return (
     <div
       style={style}
-      className={`${baseClasses} ${colorClasses} ${selectedClasses}`}
+      className={`${baseClasses} ${colorClasses} ${selectedClasses} ${animationClass}`}
       onClick={(e) => {
         e.stopPropagation(); // Prevent click from bubbling to the board
         onSelect(block.id);
