@@ -6,20 +6,59 @@ import Instructions from './components/Instructions';
 import WinModal from './components/WinModal';
 import { useSound } from './hooks/useSound';
 
+const SAVEGAME_KEY = 'keyklot-savegame';
+
 function App() {
   const [blocks, setBlocks] = useState<BlockType[]>(INITIAL_LAYOUT);
   const [selectedBlockId, setSelectedBlockId] = useState<number | null>(null);
   const [moveCount, setMoveCount] = useState<number>(0);
   const [isWin, setIsWin] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isSaveSlotFull, setIsSaveSlotFull] = useState<boolean>(false);
 
   const playMoveSound = useSound(MOVE_SOUND_B64);
+
+  useEffect(() => {
+    const savedGame = localStorage.getItem(SAVEGAME_KEY);
+    if (savedGame) {
+      setIsSaveSlotFull(true);
+    }
+  }, []);
 
   const handleReset = () => {
     setBlocks(INITIAL_LAYOUT);
     setSelectedBlockId(null);
     setMoveCount(0);
     setIsWin(false);
+    localStorage.removeItem(SAVEGAME_KEY);
+    setIsSaveSlotFull(false);
+  };
+
+  const handleSaveRestore = () => {
+    if (isSaveSlotFull) { // Restore logic
+      const savedGameJSON = localStorage.getItem(SAVEGAME_KEY);
+      if (savedGameJSON) {
+        try {
+          const savedGame = JSON.parse(savedGameJSON);
+          setBlocks(savedGame.blocks);
+          setMoveCount(savedGame.moveCount);
+          setSelectedBlockId(null);
+          setIsWin(false);
+          setIsSaveSlotFull(false); // Change button back to "Save"
+        } catch (e) {
+          console.error("Failed to parse saved game data", e);
+          localStorage.removeItem(SAVEGAME_KEY); // Clear corrupted data
+          setIsSaveSlotFull(false);
+        }
+      }
+    } else { // Save logic
+      const gameState = {
+        blocks: blocks,
+        moveCount: moveCount
+      };
+      localStorage.setItem(SAVEGAME_KEY, JSON.stringify(gameState));
+      setIsSaveSlotFull(true); // Change button to "Restore"
+    }
   };
 
   const checkWinCondition = (currentBlocks: BlockType[]) => {
@@ -180,6 +219,12 @@ function App() {
                 aria-label={isMuted ? "Unmute sounds" : "Mute sounds"}
               >
                 <SoundIcon />
+              </button>
+              <button
+                onClick={handleSaveRestore}
+                className="bg-mid-blue hover:bg-mid-blue/90 text-white font-bold py-3 px-5 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-mid-blue focus:ring-opacity-75"
+              >
+                {isSaveSlotFull ? 'Restore' : 'Save'}
               </button>
               <button
                 onClick={handleReset}
