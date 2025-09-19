@@ -45,7 +45,7 @@ const Block: React.FC<BlockProps> = ({ block, isSelected, isJustMoved, onSelect 
       }}
     >
       {letter && (
-        <span className="text-5xl lg:text-7xl font-bold text-black/20 select-none pointer-events-none leading-none">
+        <span className="text-4xl lg:text-6xl font-bold text-black/20 select-none pointer-events-none leading-none">
           {letter.toUpperCase()}
         </span>
       )}
