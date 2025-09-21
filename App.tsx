@@ -5,7 +5,7 @@ import Board from './components/Board';
 import Instructions from './components/Instructions';
 import WinModal from './components/WinModal';
 import { useSound } from './hooks/useSound';
-import ThemeSelector from './components/ThemeSelector';
+import SettingsMenu from './components/SettingsMenu';
 
 const SAVEGAME_KEY = 'keyklot-savegame';
 const THEME_KEY = 'keyklot-theme';
@@ -201,14 +201,6 @@ function App() {
     };
   }, [handleKeyDown]);
 
-  const SoundIcon = isMuted 
-    ? () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-theme-text-muted opacity-60"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-    )
-    : () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-theme-text-muted"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-    );
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
       <div className="flex flex-col items-center">
@@ -231,14 +223,12 @@ function App() {
               <p className="text-3xl font-bold text-theme-text">{moveCount}</p>
             </div>
             <div className="flex items-center gap-2 md:gap-4">
-              <button
-                onClick={() => setIsMuted(!isMuted)}
-                className="bg-black/20 p-3 rounded-lg transition-colors duration-200 hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-theme-secondary focus:ring-opacity-75"
-                aria-label={isMuted ? "Unmute sounds" : "Mute sounds"}
-              >
-                <SoundIcon />
-              </button>
-              <ThemeSelector currentTheme={theme} onThemeChange={setTheme} />
+               <SettingsMenu
+                isMuted={isMuted}
+                onToggleMute={() => setIsMuted(!isMuted)}
+                currentTheme={theme}
+                onThemeChange={setTheme}
+              />
               <button
                 onClick={handleSaveRestore}
                 className="bg-theme-neutral hover:brightness-95 text-white font-bold py-3 px-5 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-theme-neutral focus:ring-opacity-75"
